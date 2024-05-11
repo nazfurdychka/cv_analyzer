@@ -3,11 +3,11 @@ import model_script as md
 import file_utils as flu
 
 color_dict = {
-    "ORANGE_COLOR_RGB": (1, 0.7, 0.1),
-    "YELLOW_COLOR_RGB": (1, 1, 0),
-    "PURPLE_RGB": (0.816, 0.443, 0.816),
+    "GREEN_RGB": (0.078, 0.902, 0.710),
     "BLUE_RGB": (0.039, 0.765, 0.988),
-    "GREEN_RGB": (0.078, 0.902, 0.710)
+    "PURPLE_RGB": (0.816, 0.443, 0.816),
+    "YELLOW_COLOR_RGB": (1, 1, 0),
+    "ORANGE_COLOR_RGB": (1, 0.7, 0.1)
 }
 
 RED_COLOR_RGB = (1, 0, 0)

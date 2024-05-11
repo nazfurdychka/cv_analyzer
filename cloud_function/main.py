@@ -6,11 +6,11 @@ from telebot import types
 import resources.captions as cap
 
 color_to_index_dict = {
-    0: 'ORANGE',
-    1: 'YELLOW',
+    0: 'GREEN',
+    1: 'BLUE',
     2: 'PURPLE',
-    3: 'BLUE',
-    4: 'GREEN'
+    3: 'YELLOW',
+    4: 'ORANGE'
 }
 
 CLOUD_RUN_URL = os.environ["CLOUD_RUN_URL"]
@@ -50,12 +50,17 @@ def get_file_content(bot, file_id):
 
 def get_processed_file_name(original_file_name):
     file_name, file_extension = get_file_name_parts(original_file_name)
-    return file_name[0] + '_analyzed' + '.' + file_extension[1]
+    return file_name + '_analyzed' + '.' + file_extension
 
 
 def get_file_name_parts(original_file_name):
-    file_name_parts = original_file_name.split('.')
-    return file_name_parts[0], file_name_parts[1]
+    last_dot_index = original_file_name.rfind('.')
+    if last_dot_index == -1:
+        return original_file_name, ''
+    else:
+        base_name = original_file_name[:last_dot_index]
+        extension = original_file_name[last_dot_index + 1:]
+        return base_name, extension
 
 
 def handle_start_message(bot, chat_id):
@@ -110,7 +115,7 @@ def telegram_bot(request):
             document = update.message.document
             full_file_name = document.file_name
             file_extension = get_file_name_parts(full_file_name)
-            if file_extension[1] is not "pdf":
+            if file_extension[1] != "pdf":
                 bot.send_message(chat_id=chat_id, reply_to_message_id=message_id,
                                  text="Upload file with {} extension, please".format("pdf"))
                 return "OK"
@@ -129,7 +134,8 @@ def telegram_bot(request):
                                   caption=generate_full_caption(ranges_num),
                                   parse_mode="HTML")
                 bot.send_message(chat_id=chat_id, reply_to_message_id=message_id,
-                                 text="General Probability of AI generation: {} %".format(formatted_probability))
+                                 text="Percentage of AI generated content in analyzed text: {} %".format(
+                                     formatted_probability))
         elif '/start' in update.message.text:
             handle_start_message(bot, chat_id)
         elif '/set_ranges' in update.message.text:
