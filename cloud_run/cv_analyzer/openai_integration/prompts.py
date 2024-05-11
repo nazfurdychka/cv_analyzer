@@ -1,0 +1,3 @@
+parse_resume_prompt = """Summarize the text below into a JSON with exactly the following structure {educ_info:[name of educational institution],work_experience: [{job_title, company, location, duration, job_summary}]}. Note that job_summary should be array of entries that should be exact as in resume"""
+check_companies_prompt = """Do these companies exist? I need only JSON with the following structure {check_results:[{entity:company name, doesExist: boolean}]}  in response"""
+check_education_prompt = """Do these educational institutions exist? I need only JSON with the following structure {check_results:[{entity:educational institution name, doesExist: boolean}]}  in response"""
